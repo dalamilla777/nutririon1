@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <h1>Iniciar Sesión</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <!-- Botón para iniciar sesión como Paciente -->
+        <button type="submit" name="role" value="patient">Iniciar Sesión como Paciente</button>
+
+        <!-- Botón para iniciar sesión como Doctor -->
+        <button type="submit" name="role" value="doctor">Iniciar Sesión como Doctor</button>
+    </form>
+
+    <!-- Enlace para recuperar la contraseña -->
+    <p>
+        ¿Olvidaste tu contraseña? <a href="{% url 'password_reset' %}">Recuperar contraseña</a>
+    </p>
+
+    <p>
+        ¿No tienes una cuenta? <a href="{% url 'register_patient' %}">Regístrate como Paciente</a> o 
+        <a href="{% url 'register_doctor' %}">Regístrate como Doctor</a>
+    </p>
+</body>
+</html>

@@ -1,0 +1,187 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    padding: 40px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    color: #ff7f00;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+button {
+    background-color: #ff7f00;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e96d00;
+}
+
+a {
+    color: #ff7f00;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+.success {
+    color: green;
+    margin-top: 10px;
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Estilos responsivos */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+    }
+}
+
+/* Estilo general para la página de inicio */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 50px;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+h1 {
+    color: #ff7f00;
+    margin-bottom: 30px;
+}
+
+/* Botones de inicio de sesión */
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: #ff7f00;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #e96d00;
+}
+
+/* Estilo para los enlaces de registro */
+.register-info {
+    margin-top: 20px;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.register-link {
+    color: #ff7f00;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para la barra de navegación */
+.navbar {
+    background-color: #030e56;
+    overflow: hidden;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Estilo para los enlaces de la barra */
+.navbar a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 35px;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 10px;
+}
+
+/* Iconos dentro de la barra */
+.icon-home i, .icon-logout i {
+    margin-right: 8px;
+}
+
+.navbar a:hover {
+    background-color: #110598;
+    color: white;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 70px;  /* Separación para que la barra

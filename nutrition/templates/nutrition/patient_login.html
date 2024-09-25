@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión como Paciente</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <a href="{% url 'home' %}" class="icon-home">
+            <i class="fas fa-home"></i> Inicio
+        </a>
+    </div>
+    <div class="container">
+        <h1>Iniciar Sesión como Paciente</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Entrar</button>
+        </form>
+        <div class="footer">
+            ¿Olvidaste tu contraseña? <a href="{% url 'password_reset' %}">Recuperar contraseña</a>
+            | ¿No tienes cuenta? <a href="{% url 'register_patient' %}">Registrate</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a Nutrition App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <a href="{% url 'home' %}" class="icon-home">
+        </a>
+    </div>
+
+
+    <div class="container">
+        <h1>Bienvenido a Nutrition App <i class="fas fa-apple-alt"></i></h1>
+
+        <!-- Botones de inicio de sesión -->
+        <div class="button-group">
+            <!-- Enlace para iniciar sesión como Paciente -->
+            <a href="{% url 'patient_login' %}" class="btn">Iniciar Sesión como Paciente</a>
+
+            <!-- Enlace para iniciar sesión como Doctor -->
+            <a href="{% url 'doctor_login' %}" class="btn">Iniciar Sesión como Doctor</a>
+        </div>
+
+        <!-- Enlaces para registro -->
+        <p class="register-info">
+            ¿No tienes una cuenta? 
+            <a href="{% url 'register_patient' %}" class="register-link">Regístrate como Paciente</a> o 
+            <a href="{% url 'register_doctor' %}" class="register-link">Regístrate como Doctor</a>
+        </p>
+    </div>
+</body>
+</html>
+
+
