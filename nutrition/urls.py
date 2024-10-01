@@ -23,4 +23,16 @@ urlpatterns = [
     path('personal_info/', views.personal_info_view, name='personal_info'),
 
 
+
+    # Nuevas rutas
+    path('gestionar-disponibilidad/', views.gestionar_disponibilidad, name='gestionar_disponibilidad'),
+    path('agendar-cita/', views.agendar_cita, name='agendar_cita'),
+    path('gestionar-citas/', views.gestionar_citas, name='gestionar_citas'),
+    path('historial-paciente/<int:paciente_id>/', views.ver_historial_paciente, name='ver_historial_paciente'),
+    path('agregar-nota/<int:paciente_id>/', views.agregar_nota_paciente, name='agregar_nota_paciente'),
+    path('ver-notas/<int:paciente_id>/', views.ver_notas, name='ver_notas'),
+    path('ver-citas/', views.ver_citas_paciente, name='ver_citas_paciente'),
+
+
+
 ]

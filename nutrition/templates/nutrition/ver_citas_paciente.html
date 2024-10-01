@@ -1,0 +1,24 @@
+<!-- templates/nutrition/ver_citas_paciente.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Citas</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Mis Citas</h1>
+        <ul>
+        {% for cita in citas %}
+            <li>{{ cita.fecha }} - {{ cita.hora }} con el Dr. {{cita.doctor.username}}</li>
+        {% empty %}
+            <li>No tienes citas programadas.</li>
+        {% endfor %}
+        </ul>
+        <a href="{% url 'patient_home' %}" class="btn">Volver al Inicio</a>
+    </div>
+</body>
+</html>

@@ -184,4 +184,5 @@ h1 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    margin-top: 70px;  /* Separación para que la barra
+    margin-top: 70px;  /* Separación para que la barra de navegación no se superponga */
+}

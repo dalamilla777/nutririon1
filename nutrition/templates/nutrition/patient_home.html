@@ -1,12 +1,12 @@
-<!-- templates/nutrition/patient_home.html -->
 {% load static %}
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Paciente</title>
+    <title>Inicio Paciente</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <!-- Barra de navegación -->
@@ -14,22 +14,48 @@
         <a href="{% url 'home' %}" class="icon-home">
             <i class="fas fa-home"></i> Inicio
         </a>
-
         <a href="{% url 'home' %}" class="icon-logout">
             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
         </a>
     </div>
+
     <div class="container">
         <h1>Bienvenido, {{ user.username }}</h1>
-        <p>Este es tu espacio como paciente. Desde aquí puedes editar tu perfil y gestionar tu información personal.</p>
+        <p>Aquí puedes ver tu perfil nutricional y gestionar tus citas con tu doctor.</p>
         
+        <!-- Botón para editar el perfil -->
         <div class="button-group">
             <a href="{% url 'patient_profile' %}" class="btn">Editar Perfil</a>
         </div>
-        
-        
-            <p>© 2024 Nutrition. Todos los derechos reservados.</p>
-        </footer>
+
+        <!-- Mostrar información del perfil nutricional -->
+        <div class="card">
+            <h2>Perfil Nutricional</h2>
+            <p><strong>Altura:</strong> {{ user.patientprofile.height }} cm</p>
+            <p><strong>Peso:</strong> {{ user.patientprofile.weight }} kg</p>
+            <p><strong>Objetivos Nutricionales:</strong> {{ user.patientprofile.nutrition_goals }}</p>
+            <p><strong>Restricciones Alimentarias:</strong> {{ user.patientprofile.dietary_restrictions }}</p>
+        </div>
+
+        <!-- Enlace para agendar cita -->
+        <div class="button-group">
+            <a href="{% url 'agendar_cita' %}" class="btn">Agendar Cita con Doctor</a>
+        </div>
+
+        <!-- Historial de citas y notas del doctor -->
+        <div class="card">
+            <h2>Historial de Citas</h2>
+            <a href="{% url 'ver_historial_paciente' user.id %}" class="btn">Ver Historial de Citas</a>
+        </div>
+
+        <div class="card">
+            <h2>Notas del Doctor</h2>
+            <a href="{% url 'ver_notas' user.id %}" class="btn">Ver Notas del Doctor</a>
+        </div>
     </div>
+
+    <footer>
+        <p>© 2024 Nutrition App. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>

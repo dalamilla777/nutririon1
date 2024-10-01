@@ -2,6 +2,8 @@ import random
 import string
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+
 
 class PatientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -47,3 +49,48 @@ class PersonalInfo(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellidos}"
+    
+
+
+
+
+
+
+
+
+class DisponibilidadDoctor(models.Model):
+    doctor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='disponibilidad_doctor')
+    dia = models.CharField(max_length=10, choices=[('Lunes', 'Lunes'), ('Martes', 'Martes'), ('Miércoles', 'Miércoles'), ('Jueves', 'Jueves'), ('Viernes', 'Viernes')])
+    hora_inicio = models.TimeField()
+    hora_fin = models.TimeField()
+
+    def __str__(self):
+        return f"{self.doctor.username}: {self.dia} de {self.hora_inicio} a {self.hora_fin}"
+
+
+
+
+class Cita(models.Model):
+    doctor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='doctor_cita')
+    paciente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='paciente_cita')
+    fecha = models.DateField()
+    hora = models.TimeField()
+    estado = models.CharField(max_length=20, choices=[('Pendiente', 'Pendiente'), ('Confirmada', 'Confirmada'), ('Rechazada', 'Rechazada')], default='Pendiente')
+
+    def __str__(self):
+        return f"Cita con {self.doctor.username} el {self.fecha} a las {self.hora}"
+
+
+
+
+class Nota(models.Model):
+    doctor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='doctor_nota')
+    paciente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='paciente_nota')
+    contenido = models.TextField()
+    fecha = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return f"Nota de {self.doctor.username} para {self.paciente.username} - {self.fecha}"
+
+
+

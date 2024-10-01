@@ -2,8 +2,8 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from .models import PatientProfile, DoctorProfile
-from .models import PersonalInfo
+from .models import *
+
 
 
 class PatientRegistrationForm(forms.ModelForm):
@@ -74,4 +74,46 @@ class DoctorProfileForm(forms.ModelForm):
 class PersonalInfoForm(forms.ModelForm):
     class Meta:
         model = PersonalInfo
-        fields = ['nombre', 'apellidos', 'contacto_emergencia', 'nombre_contacto_emergencia', 'relacion_contacto_emergencia', 'direccion', 'curp']
+        fields = ['nombre', 'apellidos', 'contacto_emergencia',
+                   'nombre_contacto_emergencia', 'relacion_contacto_emergencia', 'direccion', 'curp']
+        
+
+class DisponibilidadForm(forms.ModelForm):
+    class Meta:
+        model = DisponibilidadDoctor
+        fields = ['dia', 'hora_inicio', 'hora_fin']
+
+
+
+
+
+
+
+
+class AgendarCitaForm(forms.ModelForm):
+    class Meta:
+        model = Cita
+        fields = ['doctor', 'fecha', 'hora']
+
+    # Validar la disponibilidad del doctor en la fecha y hora seleccionadas
+    def clean(self):
+        cleaned_data = super().clean()
+        doctor = cleaned_data.get('doctor')
+        fecha = cleaned_data.get('fecha')
+        hora = cleaned_data.get('hora')
+
+        if Cita.objects.filter(doctor=doctor, fecha=fecha, hora=hora).exists():
+            raise forms.ValidationError('El doctor no está disponible en la fecha y hora seleccionadas.')
+        
+        return cleaned_data
+    
+
+
+
+
+
+class NotaForm(forms.ModelForm):
+    class Meta:
+        model = Nota
+        fields = ['contenido']
+

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import PatientRegistrationForm, DoctorRegistrationForm, PatientProfileForm, DoctorProfileForm
-from .models import DoctorProfile, PatientProfile
+from .forms import NotaForm, PatientRegistrationForm, DoctorRegistrationForm, PatientProfileForm, DoctorProfileForm
+from .models import DoctorProfile, PatientProfile, Nota
 from .forms import PersonalInfoForm
 from .models import PersonalInfo
 from django.contrib.auth import login, authenticate
@@ -12,6 +12,15 @@ from django.core.validators import validate_email
 import re
 import random
 import string
+from .models import DisponibilidadDoctor
+from .forms import DisponibilidadForm
+from .models import Cita, DisponibilidadDoctor
+from .forms import AgendarCitaForm
+from django.core.mail import send_mail
+
+
+
+
 
 # Contraseña segura: al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un carácter especial
 def validar_contrasena(password):
@@ -295,3 +304,152 @@ def personal_info_view(request):
         form = PersonalInfoForm(instance=personal_info)
 
     return render(request, 'nutrition/personal_info.html', {'form': form})
+
+
+
+
+
+
+
+
+
+@login_required
+def gestionar_disponibilidad(request):
+    if not request.user.groups.filter(name='Doctores').exists():  # Solo los doctores pueden acceder
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = DisponibilidadForm(request.POST)
+        if form.is_valid():
+            disponibilidad = form.save(commit=False)
+            disponibilidad.doctor = request.user
+            disponibilidad.save()
+            return redirect('gestionar_disponibilidad')
+    else:
+        form = DisponibilidadForm()
+    
+    disponibilidad_doctor = DisponibilidadDoctor.objects.filter(doctor=request.user)
+    return render(request, 'nutrition/gestionar_disponibilidad.html',
+                   {'form': form, 'disponibilidad_doctor': disponibilidad_doctor})
+
+
+
+
+
+
+
+@login_required
+def agendar_cita(request):
+    if request.method == 'POST':
+        form = AgendarCitaForm(request.POST)
+        if form.is_valid():
+            cita = form.save(commit=False)
+            cita.paciente = request.user
+            cita.save()
+            return redirect('ver_citas_paciente')
+    else:
+        form = AgendarCitaForm()
+    return render(request, 'nutrition/agendar_cita.html', {'form': form})
+
+
+
+
+@login_required
+def gestionar_citas(request):
+    citas = Cita.objects.filter(doctor=request.user)
+    if request.method == 'POST':
+        cita_id = request.POST.get('cita_id')
+        accion = request.POST.get('accion')
+        cita = Cita.objects.get(id=cita_id)
+        if accion == 'confirmar':
+            cita.estado = 'Confirmada'
+        elif accion == 'rechazar':
+            cita.estado = 'Rechazada'
+        cita.save()
+        return redirect('gestionar_citas')
+
+    return render(request, 'nutrition/gestionar_citas.html', {'citas': citas})
+
+
+
+
+
+
+@login_required
+def gestionar_citas(request):
+    citas = Cita.objects.filter(doctor=request.user)
+    if request.method == 'POST':
+        cita_id = request.POST.get('cita_id')
+        accion = request.POST.get('accion')
+        cita = Cita.objects.get(id=cita_id)
+        if accion == 'confirmar':
+            cita.estado = 'Confirmada'
+            send_mail(
+                'Confirmación de Cita',
+                f'Su cita con el Dr. {cita.doctor.username} ha sido confirmada.',
+                'from@example.com',
+                [cita.paciente.email],
+                fail_silently=False,
+            )
+        elif accion == 'rechazar':
+            cita.estado = 'Rechazada'
+            send_mail(
+                'Rechazo de Cita',
+                f'Su cita con el Dr. {cita.doctor.username} ha sido rechazada.',
+                'from@example.com',
+                [cita.paciente.email],
+                fail_silently=False,
+            )
+        cita.save()
+        return redirect('gestionar_citas')
+
+    return render(request, 'nutrition/gestionar_citas.html', {'citas': citas})
+
+
+
+# views.py
+@login_required
+def ver_historial_paciente(request, paciente_id):
+    paciente = User.objects.get(id=paciente_id)
+    notas = Nota.objects.filter(paciente=paciente, doctor=request.user)
+    return render(request, 'nutrition/ver_historial_paciente.html', {'paciente': paciente, 'notas': notas})
+
+@login_required
+def agregar_nota_paciente(request, paciente_id):
+    paciente = User.objects.get(id=paciente_id)
+    if request.method == 'POST':
+        form = NotaForm(request.POST)
+        if form.is_valid():
+            nota = form.save(commit=False)
+            nota.paciente = paciente
+            nota.doctor = request.user
+            nota.save()
+            return redirect('ver_historial_paciente', paciente_id=paciente_id)
+    else:
+        form = NotaForm()
+    return render(request, 'nutrition/agregar_nota_paciente.html', {'form': form, 'paciente': paciente})
+
+
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import PatientProfile, Nota
+
+@login_required
+def ver_notas(request, paciente_id):
+    paciente = get_object_or_404(PatientProfile, user_id=paciente_id)
+    notas = Nota.objects.filter(paciente=paciente)
+    
+    return render(request, 'nutrition/ver_notas.html', {
+        'paciente': paciente,
+        'notas': notas,
+    })
+
+
+
+
+
+@login_required
+def ver_citas_paciente(request):
+    citas = Cita.objects.filter(paciente=request.user)
+    return render(request, 'nutrition/ver_citas_paciente.html', {'citas': citas})
