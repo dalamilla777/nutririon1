@@ -6,19 +6,19 @@ body {
     background-color: #f4f6f9;
     color: #333;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column; /* Cambiar a columna para que el contenido y el pie de página se apilen verticalmente */
     min-height: 100vh;
 }
 
 .container {
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
     background-color: white;
     padding: 40px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-align: center;
+    flex: 1; /* Permitir que el contenedor principal ocupe el espacio disponible */
 }
 
 h1 {
@@ -27,7 +27,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-form {
+form.profile-form {
     display: flex;
     flex-direction: column;
 }
@@ -40,7 +40,7 @@ input, button {
     border: 1px solid #ddd;
 }
 
-button {
+button.btn {
     background-color: #ff7f00;
     color: white;
     border: none;
@@ -48,27 +48,44 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+button.btn:hover {
     background-color: #e96d00;
 }
 
-a {
-    color: #ff7f00;
+a.btn {
+    display: inline-block;
+    background-color: #ff7f00;
+    color: white;
+    padding: 10px 20px;
     text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
 }
 
-a:hover {
-    text-decoration: underline;
+a.btn:hover {
+    background-color: #e96d00;
 }
 
-.error {
-    color: red;
-    margin-top: 10px;
+.messages {
+    margin-bottom: 20px;
 }
 
-.success {
-    color: green;
-    margin-top: 10px;
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
 .footer {
@@ -78,12 +95,115 @@ a:hover {
 
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 5px;
     background-color: #333;
     color: white;
-    position: fixed;
-    bottom: 0;
     width: 100%;
+    position: relative; /* Cambiar a relativo para que no sea fijo */
+}
+
+/* Estilos responsivos */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+    }
+}
+
+/* Estilo para la barra de navegación */
+.navbar {
+    background-color: #030e56;
+    overflow: hidden;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Estilo para los enlaces de la barra */
+.navbar a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 35px;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 10px;
+}
+
+/* Iconos dentro de la barra */
+.icon-home i, .icon-logout i {
+    margin-right: 8px;
+}
+
+.navbar a:hover {
+    background-color: #110598;
+    color: white;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 70px;  /* Separación para que la barra de navegación no se superponga */
+}
+
+/* Estilo para los botones */
+button, a.btn {
+    display: inline-block;
+    background-color: #ff7f00;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover, a.btn:hover {
+    background-color: #e96d00;
+}
+
+/* Estilo para los mensajes */
+.messages {
+    margin-bottom: 20px;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Estilo para el pie de página */
+footer {
+    text-align: center;
+    padding: 5px;
+    background-color: #333;
+    color: white;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+    }
 }
 
 /* Estilos responsivos */

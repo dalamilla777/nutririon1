@@ -32,6 +32,7 @@ urlpatterns = [
     path('agregar-nota/<int:paciente_id>/', views.agregar_nota_paciente, name='agregar_nota_paciente'),
     path('ver-notas/<int:paciente_id>/', views.ver_notas, name='ver_notas'),
     path('ver-citas/', views.ver_citas_paciente, name='ver_citas_paciente'),
+    path('ver-citas-doctor/', views.ver_citas_doctor, name='ver_citas_doctor'),
 
 
 

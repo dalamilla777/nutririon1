@@ -14,7 +14,7 @@
         <a href="{% url 'home' %}" class="icon-home">
             <i class="fas fa-home"></i> Inicio
         </a>
-        <a href="{% url 'logout' %}" class="icon-logout">
+        <a href="{% url 'home' %}" class="icon-logout">
             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
         </a>
     </div>
@@ -26,6 +26,11 @@
         <!-- Enlace para editar el perfil -->
         <div class="button-group">
             <a href="{% url 'doctor_profile' %}" class="btn">Editar Mi Perfil</a>
+        </div>
+
+        <!-- Enlace para ver citas -->
+        <div class="button-group">
+            <a href="{% url 'ver_citas_doctor' %}" class="btn">Ver Citas con Pacientes</a>
         </div>
 
         <!-- Lista de pacientes -->

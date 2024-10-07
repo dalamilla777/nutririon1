@@ -74,8 +74,14 @@ class DoctorProfileForm(forms.ModelForm):
 class PersonalInfoForm(forms.ModelForm):
     class Meta:
         model = PersonalInfo
-        fields = ['nombre', 'apellidos', 'contacto_emergencia',
-                   'nombre_contacto_emergencia', 'relacion_contacto_emergencia', 'direccion', 'curp']
+        fields = ['nombre_contacto_emergencia', 'relacion_contacto_emergencia', 'numero_emergencia','direccion', 'curp']  # Campos necesarios
+        labels = {
+            'nombre_contacto_emergencia': 'Nombre completo del Contacto de Emergencia',
+            'relacion_contacto_emergencia': 'Relación con el Contacto de Emergencia',
+            'numero_emergencia': 'Número de Emergencia',
+            'direccion': 'Dirección',
+            'curp': 'Curp',
+        }
         
 
 class DisponibilidadForm(forms.ModelForm):
@@ -107,8 +113,6 @@ class AgendarCitaForm(forms.ModelForm):
         
         return cleaned_data
     
-
-
 
 
 

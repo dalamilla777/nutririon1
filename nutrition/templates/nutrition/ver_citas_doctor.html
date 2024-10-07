@@ -1,0 +1,22 @@
+<!-- ver_citas_doctor.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Citas</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Mis Citas</h1>
+    <ul>
+        {% for cita in citas %}
+        <li>{{ cita.fecha }} - {{ cita.hora }} con {{ cita.paciente.username }}</li>
+        {% empty %}
+        <li>No tienes citas programadas.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'doctor_home' %}" class="btn">Volver al Inicio</a>
+</body>
+</html> 

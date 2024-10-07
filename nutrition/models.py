@@ -41,7 +41,7 @@ class PersonalInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)  # Relación con el usuario
     nombre = models.CharField(max_length=255)
     apellidos = models.CharField(max_length=255)
-    contacto_emergencia = models.CharField(max_length=15, blank=True)
+    numero_emergencia = models.CharField(max_length=15, blank=True)
     nombre_contacto_emergencia = models.CharField(max_length=255, blank=True)
     relacion_contacto_emergencia = models.CharField(max_length=50, blank=True)
     direccion = models.TextField(blank=True)

@@ -17,6 +17,7 @@ from .forms import DisponibilidadForm
 from .models import Cita, DisponibilidadDoctor
 from .forms import AgendarCitaForm
 from django.core.mail import send_mail
+from django.shortcuts import render
 
 
 
@@ -453,3 +454,12 @@ def ver_notas(request, paciente_id):
 def ver_citas_paciente(request):
     citas = Cita.objects.filter(paciente=request.user)
     return render(request, 'nutrition/ver_citas_paciente.html', {'citas': citas})
+
+
+# views.py
+
+
+@login_required
+def ver_citas_doctor(request):    
+    citas = Cita.objects.filter(doctor=request.user)
+    return render(request, 'nutrition/ver_citas_doctor.html', {'citas': citas})

@@ -1,4 +1,4 @@
-<!-- agendar_cita.html -->
+<!-- agendar_cita.html
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -16,5 +16,66 @@
         {{ form.as_p }}
         <button type="submit" class="btn">Agendar Cita</button>
     </form>
+</body>
+</html>
+-->
+
+<!-- agendar_cita.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <h1>Agendar Cita</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Agendar Cita</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr("input[name='fecha']", {
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                disable: [
+                    function(date) {
+                        // Disable Sundays
+                        return (date.getDay() === 0);
+                    }
+                ]
+            });
+
+            flatpickr("input[name='hora']", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                minTime: "09:00",
+                maxTime: "16:00",
+                disable: [
+                    function(date) {
+                        // Disable times outside of 9:00 to 16:00 on weekdays and 10:00 to 13:00 on Saturdays
+                        const day = date.getDay();
+                        const hour = date.getHours();
+                        if (day >= 1 && day <= 5) {
+                            return hour < 9 || hour > 16;
+                        } else if (day === 6) {
+                            return hour < 10 || hour > 13;
+                        }
+                        return false;
+                    }
+                ]
+            });
+        });
+    </script>
 </body>
 </html>
