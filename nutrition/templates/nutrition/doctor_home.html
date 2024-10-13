@@ -30,36 +30,38 @@
 
         <!-- Enlace para ver citas -->
         <div class="button-group">
-            <a href="{% url 'ver_citas_doctor' %}" class="btn">Ver Citas con Pacientes</a>
+            <a href="{% url 'ver_citas_doctor' %}" class="btn">Ver Historial de Citas</a>
         </div>
 
         <!-- Lista de pacientes -->
         <div class="card">
             <h2>Mis Pacientes</h2>
             <ul>
-                {% for paciente in pacientes %}
+                {% for paciente in patients %}
                     <li>
                         <strong>{{ paciente.user.username }}</strong> - {{ paciente.user.email }}
-                        <a href="{% url 'ver_historial_paciente' paciente.id %}" class="btn">Ver Historial</a>
-                        <a href="{% url 'agregar_nota_paciente' paciente.id %}" class="btn">Agregar Nota</a>
+                        <a href="{% url 'ver_historial_paciente' paciente.user.id %}" class="btn">Ver Historial</a>
+                        <a href="{% url 'agregar_nota_paciente' paciente.user.id %}" class="btn">Agregar Nota</a>
+                        <a href="{% url 'patient_food_intake' paciente.user.id %}" class="btn">Ver Ingesta de Alimentos</a>
                     </li>
                 {% endfor %}
             </ul>
         </div>
 
         <!-- Confirmación de citas -->
+        {% if citas_pendientes %}
         <div class="card">
             <h2>Citas Pendientes</h2>
             <ul>
                 {% for cita in citas_pendientes %}
                     <li>
-                        <strong>{{ cita.paciente.user.username }}</strong> - {{ cita.fecha }} a las {{ cita.hora }}
-                        <a href="{% url 'confirmar_cita' cita.id %}" class="btn">Confirmar Cita</a>
-                        <a href="{% url 'sugerir_fecha' cita.id %}" class="btn">Sugerir Nueva Fecha</a>
+                        <strong>{{ cita.paciente.username }}</strong> - {{ cita.fecha }} a las {{ cita.hora }}
+                        <a href="{% url 'confirmar_cita' cita.id %}" class="btn">Atender</a>
                     </li>
                 {% endfor %}
             </ul>
         </div>
+        {% endif %}
     </div>
 
     <footer>

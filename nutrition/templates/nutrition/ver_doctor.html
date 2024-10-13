@@ -1,11 +1,10 @@
-<!-- ver_citas_doctor.html -->
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Citas</title>
+    <title>Perfil del Doctor</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -20,14 +19,14 @@
         </a>
     </div>
 
-    <h1>Mis Citas</h1>
-    <ul>
-        {% for cita in citas %}
-        <li>{{ cita.fecha }} - {{ cita.hora }} con {{ cita.paciente.username }}</li>
-        {% empty %}
-        <li>No tienes citas programadas.</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'doctor_home' %}" class="btn">Volver al Inicio</a>
+    <div class="container">
+        <h1>Perfil del Doctor</h1>
+        <p><strong>Nombre:</strong> {{ doctor.user.username }}</p>
+        <p><strong>Email:</strong> {{ doctor.user.email }}</p>
+        <p><strong>Especialidad:</strong> {{ doctor.specialty }}</p>
+        <p><strong>Licencia Médica:</strong> {{ doctor.medical_license }}</p>
+        <p><strong>Dirección de la Clínica:</strong> {{ doctor.clinic_address }}</p>
+        <a href="{% url 'elegir_doctor' doctor.id %}" class="btn">Elegir este Doctor</a>
+    </div>
 </body>
-</html> 
+</html>

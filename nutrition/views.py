@@ -1,27 +1,23 @@
-from django.shortcuts import render, redirect
-from .forms import NotaForm, PatientRegistrationForm, DoctorRegistrationForm, PatientProfileForm, DoctorProfileForm
-from .models import DoctorProfile, PatientProfile, Nota
-from .forms import PersonalInfoForm
-from .models import PersonalInfo
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.core.mail import send_mail
 import re
 import random
 import string
-from .models import DisponibilidadDoctor
-from .forms import DisponibilidadForm
-from .models import Cita, DisponibilidadDoctor
-from .forms import AgendarCitaForm
-from django.core.mail import send_mail
-from django.shortcuts import render
-
-
-
-
+from .forms import (
+    NotaForm, PatientRegistrationForm, DoctorRegistrationForm, 
+    PatientProfileForm, DoctorProfileForm, PersonalInfoForm, 
+    DisponibilidadForm, AgendarCitaForm, FoodIntakeForm
+)
+from .models import (
+    DoctorProfile, PatientProfile, Nota, PersonalInfo, 
+    DisponibilidadDoctor, Cita, FoodIntake
+)
 
 # Contraseña segura: al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un carácter especial
 def validar_contrasena(password):
@@ -169,9 +165,17 @@ def doctor_login(request):
 # Vista para el home de los doctores
 @login_required
 def doctor_home(request):
-    return render(request, 'nutrition/doctor_home.html')
+    doctor_profile = request.user.doctorprofile
+    patients = PatientProfile.objects.filter(doctor=request.user)
+    citas_pendientes = Cita.objects.filter(doctor=request.user, estado='Pendiente')
 
-# Perfil del doctor	
+    return render(request, 'nutrition/doctor_home.html', {
+        'user': request.user,
+        'patients': patients,
+        'citas_pendientes': citas_pendientes,
+    })
+
+# Perfil del doctor
 @login_required
 def doctor_profile(request):
     # Verificar si el usuario tiene un perfil de doctor, si no, lo crea
@@ -266,8 +270,6 @@ def password_reset_confirm(request):
 def password_reset_complete(request):
     return render(request, 'nutrition/password_reset_complete.html')
 
-
-
 @login_required
 def personal_info_view(request):
     try:
@@ -306,14 +308,6 @@ def personal_info_view(request):
 
     return render(request, 'nutrition/personal_info.html', {'form': form})
 
-
-
-
-
-
-
-
-
 @login_required
 def gestionar_disponibilidad(request):
     if not request.user.groups.filter(name='Doctores').exists():  # Solo los doctores pueden acceder
@@ -333,12 +327,6 @@ def gestionar_disponibilidad(request):
     return render(request, 'nutrition/gestionar_disponibilidad.html',
                    {'form': form, 'disponibilidad_doctor': disponibilidad_doctor})
 
-
-
-
-
-
-
 @login_required
 def agendar_cita(request):
     if request.method == 'POST':
@@ -351,7 +339,6 @@ def agendar_cita(request):
     else:
         form = AgendarCitaForm()
     return render(request, 'nutrition/agendar_cita.html', {'form': form})
-
 
 
 
@@ -406,9 +393,6 @@ def gestionar_citas(request):
 
     return render(request, 'nutrition/gestionar_citas.html', {'citas': citas})
 
-
-
-# views.py
 @login_required
 def ver_historial_paciente(request, paciente_id):
     paciente = User.objects.get(id=paciente_id)
@@ -430,12 +414,6 @@ def agregar_nota_paciente(request, paciente_id):
         form = NotaForm()
     return render(request, 'nutrition/agregar_nota_paciente.html', {'form': form, 'paciente': paciente})
 
-
-
-
-from django.shortcuts import render, get_object_or_404
-from .models import PatientProfile, Nota
-
 @login_required
 def ver_notas(request, paciente_id):
     paciente = get_object_or_404(PatientProfile, user_id=paciente_id)
@@ -446,20 +424,74 @@ def ver_notas(request, paciente_id):
         'notas': notas,
     })
 
-
-
-
-
 @login_required
 def ver_citas_paciente(request):
     citas = Cita.objects.filter(paciente=request.user)
     return render(request, 'nutrition/ver_citas_paciente.html', {'citas': citas})
 
-
-# views.py
-
-
 @login_required
 def ver_citas_doctor(request):    
     citas = Cita.objects.filter(doctor=request.user)
     return render(request, 'nutrition/ver_citas_doctor.html', {'citas': citas})
+
+@login_required
+def food_intake_view(request):
+    if request.method == 'POST':
+        form = FoodIntakeForm(request.POST)
+        if form.is_valid():
+            food_intake = form.save(commit=False)
+            food_intake.user = request.user
+            food_intake.save()
+            return redirect('food_intake')  # Cambiar según tu ruta
+    else:
+        form = FoodIntakeForm()
+    
+    return render(request, 'nutrition/food_intake.html', {'form': form})
+
+@login_required
+def patient_food_intake_view(request, patient_id):
+    food_intakes = FoodIntake.objects.filter(user_id=patient_id).order_by('-date', '-time')
+    return render(request, 'nutrition/patient_food_intake.html', {'food_intakes': food_intakes})
+
+@login_required
+def confirmar_cita(request, cita_id):
+    cita = get_object_or_404(Cita, id=cita_id)
+    if request.method == 'POST':
+        cita.estado = 'Confirmada'
+        cita.save()
+        send_mail(
+            'Confirmación de Cita',
+            f'Su cita con el Dr. {cita.doctor.username} ha sido confirmada.',
+            'from@example.com',
+            [cita.paciente.email],
+            fail_silently=False,
+        )
+        return redirect('gestionar_citas')
+    return render(request, 'nutrition/confirmar_cita.html', {'cita': cita})
+
+
+
+
+@login_required
+def listar_doctores(request):
+    doctores = DoctorProfile.objects.all()
+    return render(request, 'nutrition/listar_doctores.html', {'doctores': doctores})
+
+
+
+@login_required
+def ver_perfil_doctor(request, doctor_id):
+    doctor = get_object_or_404(DoctorProfile, id=doctor_id)
+    return render(request, 'nutrition/ver_doctor.html', {'doctor': doctor})
+
+
+
+
+@login_required
+def elegir_doctor(request, doctor_id):
+    doctor = get_object_or_404(DoctorProfile, id=doctor_id)
+    patient_profile = request.user.patientprofile
+    patient_profile.doctor = doctor.user
+    patient_profile.save()
+    return redirect('patient_home')
+
