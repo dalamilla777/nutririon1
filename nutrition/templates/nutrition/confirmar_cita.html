@@ -6,8 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmar Cita</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+<!-- Barra de navegación -->
+    <div class="navbar">
+        <a href="{% url 'doctor_home' %}" class="icon-home">
+            <i class="fas fa-home"></i> Inicio
+        </a>
+        <a href="{% url 'home' %}" class="icon-logout">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+    </div>
+
     <div class="container">
         <h1>Confirmar Cita</h1>
         <p>¿Está seguro de que desea confirmar esta cita?</p>
@@ -16,8 +27,9 @@
         <p><strong>Hora:</strong> {{ cita.hora }}</p>
         <form method="post">
             {% csrf_token %}
-            <button type="submit" class="btn">Confirmar</button>
-            <a href="{% url 'gestionar_citas' %}" class="btn">Cancelar</a>
+            <button type="submit" name ="accion" value="confirmar" class="btn">Confirmar</button>
+            <button type="submit" name="accion" value="rechazar" class="btn">Rechazar</button>
+            
         </form>
     </div>
 </body>

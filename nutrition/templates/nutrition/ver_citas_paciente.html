@@ -7,8 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Citas</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <a href="{% url 'patient_home' %}" class="icon-home">
+            <i class="fas fa-home"></i> Inicio
+        </a>
+        <a href="{% url 'home' %}" class="icon-logout">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+    </div>
+
     <div class="container">
         <h1>Mis Citas</h1>
         <ul>
@@ -20,5 +31,6 @@
         </ul>
         <a href="{% url 'patient_home' %}" class="btn">Volver al Inicio</a>
     </div>
+    
 </body>
 </html>

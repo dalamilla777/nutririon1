@@ -442,7 +442,7 @@ def food_intake_view(request):
             food_intake = form.save(commit=False)
             food_intake.user = request.user
             food_intake.save()
-            return redirect('food_intake')  # Cambiar según tu ruta
+            return redirect('food_intake') 
     else:
         form = FoodIntakeForm()
     
