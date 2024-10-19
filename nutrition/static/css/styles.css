@@ -1,308 +1,213 @@
-/* Estilos generales */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f6f9;
-    color: #333;
-    display: flex;
-    flex-direction: column; /* Cambiar a columna para que el contenido y el pie de página se apilen verticalmente */
-    min-height: 100vh;
+@font-face {
+  font-family: 'Heading Now';
+  src: url('https://fonts.vdhazel.com/headingnow/Heading-Now-Variable-Regular-trial.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --color-bg1: rgb(255, 94, 77); /* Rojo cálido para el inicio del gradiente */
+  --color-bg2: rgb(0, 17, 82); /* Naranja brillante para el fin del gradiente */
+  --color1: 255, 163, 67; /* Naranja para g1 */
+  --color2: 255, 209, 102; /* Amarillo para g2 */
+  --color3: 135, 60, 190; /* Púrpura para g3 */
+  --color4: 255, 94, 77; /* Rojo para g4 */
+  --color5: 255, 105, 180; /* Rosa para g5 */
+  --color-interactive: 135, 60, 190; /* Púrpura para interactive */
+  --circle-size: 80%;
+  --blending: soft-light; /* Ajustar según sea necesario para el efecto de mezcla deseado */
+}
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+/* Fondo dinámico de gradiente */
+.gradient-bg {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  overflow: hidden;
+  background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 .container {
-    width: 100%;
-    max-width: 600px;
-    background-color: white;
-    padding: 40px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    text-align: center;
-    flex: 1; /* Permitir que el contenedor principal ocupe el espacio disponible */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  padding: 20px;
 }
 
-h1 {
-    font-size: 2em;
-    color: #ff7f00;
-    margin-bottom: 20px;
+#animatedText {
+  font-family: 'Roboto', sans-serif;
+  font-size: clamp(2rem, 5vw, 6rem); /* Adapta el tamaño del texto a diferentes pantallas */
+  font-weight: 500; /* Peso de la fuente para mejorar la legibilidad */
+  color: white; /* Color blanco para el texto */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto para mejorar el contraste sobre el fondo */
+  animation: none; /* Desactivar cualquier animación */
 }
 
-form.profile-form {
-    display: flex;
-    flex-direction: column;
+.gradients-container {
+  filter: blur(40px);
+  width: 100%;
+  height: 100%;
 }
 
-input, button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+/* Animaciones para los círculos */
+.g1, .g2, .g3, .g4, .g5, .interactive {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 50%) no-repeat;
+  mix-blend-mode: var(--blending);
+  border-radius: 50%;
 }
 
-button.btn {
-    background-color: #ff7f00;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.gradient-bg {
+  background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
 }
 
-button.btn:hover {
-    background-color: #e96d00;
+.g1 {
+  background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveVertical 5s ease infinite; /* Reducido de 30s a 15s */
 }
 
-a.btn {
-    display: inline-block;
-    background-color: #ff7f00;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
+.g2 {
+  background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveInCircle 5s reverse infinite; /* Reducido de 20s a 10s */
 }
 
-a.btn:hover {
-    background-color: #e96d00;
+.g3 {
+  background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveInCircle 10s linear infinite; /* Reducido de 40s a 20s */
 }
 
-.messages {
-    margin-bottom: 20px;
+.g4 {
+  background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveHorizontal 10s ease infinite; /* Reducido de 40s a 20s */
 }
 
-.alert {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+.g5 {
+  background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%);
+  width: calc(var(--circle-size) * 2);
+  height: calc(var(--circle-size) * 2);
+  animation: moveInCircle 5s ease infinite; /* Reducido de 20s a 10s */
 }
 
-.alert.success {
-    background-color: #d4edda;
-    color: #155724;
+.interactive {
+  background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%);
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  animation: moveInCircle 10s ease infinite; /* Añadido para efecto */
 }
 
-.alert.error {
-    background-color: #f8d7da;
-    color: #721c24;
+
+/* Animaciones */
+@keyframes moveInCircle {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
 }
 
-.footer {
-    margin-top: 20px;
-    font-size: 0.9em;
+@keyframes moveVertical {
+  0% { transform: translateY(-50%); }
+  50% { transform: translateY(50%); }
+  100% { transform: translateY(-50%); }
 }
 
-footer {
-    text-align: center;
-    padding: 5px;
-    background-color: #333;
-    color: white;
-    width: 100%;
-    position: relative; /* Cambiar a relativo para que no sea fijo */
+@keyframes moveHorizontal {
+  0% { transform: translateX(-50%) translateY(-10%); }
+  50% { transform: translateX(50%) translateY(10%); }
+  100% { transform: translateX(-50%) translateY(-10%); }
 }
 
-/* Estilos responsivos */
-@media (max-width: 600px) {
-    .container {
-        width: 90%;
-    }
-}
-
-/* Estilo para la barra de navegación */
-.navbar {
-    background-color: #030e56;
-    overflow: hidden;
-    padding: 10px 0;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-/* Estilo para los enlaces de la barra */
-.navbar a {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 35px;
-    text-decoration: none;
-    font-size: 18px;
-    margin: 0 10px;
-}
-
-/* Iconos dentro de la barra */
-.icon-home i, .icon-logout i {
-    margin-right: 8px;
-}
-
-.navbar a:hover {
-    background-color: #110598;
-    color: white;
-}
-
-/* Contenedor principal */
+/* Estilo para el contenedor principal */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    margin-top: 70px;  /* Separación para que la barra de navegación no se superponga */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  padding: 20px;
 }
 
-/* Estilo para los botones */
-button, a.btn {
-    display: inline-block;
-    background-color: #ff7f00;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
-}
 
-button:hover, a.btn:hover {
-    background-color: #e96d00;
-}
 
-/* Estilo para los mensajes */
-.messages {
-    margin-bottom: 20px;
-}
-
-.alert {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-.alert.success {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.alert.error {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-
-/* Estilo para el pie de página */
-footer {
-    text-align: center;
-    padding: 5px;
-    background-color: #333;
-    color: white;
-    width: 100%;
-    position: relative;
-    bottom: 0;
-}
-
-/* Estilos responsivos */
-@media (max-width: 600px) {
-    .container {
-        width: 90%;
-    }
-}
-
-/* Estilos responsivos */
-@media (max-width: 600px) {
-    .container {
-        width: 90%;
-    }
-}
-
-/* Estilo general para la página de inicio */
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 50px;
-    background-color: #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    text-align: center;
-}
-
-h1 {
-    color: #ff7f00;
-    margin-bottom: 30px;
-}
-
-/* Botones de inicio de sesión */
-.button-group {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
-
+/* Estilos de botones y enlaces */
 .btn {
-    background-color: #ff7f00;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+  background-color: #152b6c; /* Color base del botón */
+  color: white;
+  padding: 15px 30px; /* Tamaño del botón */
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.button-group {
+  display: flex;
+  justify-content: center; /* Centra los botones horizontalmente */
+  gap: 80px; /* Espacio entre cada botón */
 }
 
-.btn:hover {
-    background-color: #e96d00;
+.btn:hover, .btn:focus {
+  background: linear-gradient(145deg, #000000, #000000); /* Azul claro que contrasta bien con un fondo rojo/naranja */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+  color: white; /* Mantener el texto blanco para asegurar la legibilidad */
 }
 
-/* Estilo para los enlaces de registro */
-.register-info {
-    margin-top: 20px;
-    font-size: 1.1em;
-    color: #333;
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-.register-link {
-    color: #ff7f00;
-    text-decoration: none;
-}
-
-.register-link:hover {
-    text-decoration: underline;
-}
-
-/* Estilo para la barra de navegación */
-.navbar {
-    background-color: #030e56;
-    overflow: hidden;
-    padding: 10px 0;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-/* Estilo para los enlaces de la barra */
-.navbar a {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 35px;
-    text-decoration: none;
-    font-size: 18px;
-    margin: 0 10px;
-}
-
-/* Iconos dentro de la barra */
-.icon-home i, .icon-logout i {
-    margin-right: 8px;
-}
-
-.navbar a:hover {
-    background-color: #110598;
-    color: white;
-}
-
-/* Contenedor principal */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    margin-top: 70px;  /* Separación para que la barra de navegación no se superponga */
+.register-link, .register-info {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Mejorar la legibilidad de los enlaces */
 }
