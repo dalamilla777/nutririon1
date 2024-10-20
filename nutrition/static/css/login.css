@@ -1,0 +1,261 @@
+@font-face {
+  font-family: 'Heading Now';
+  src: url('https://fonts.vdhazel.com/headingnow/Heading-Now-Variable-Regular-trial.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --color-bg1: rgb(255, 94, 77); /* Rojo cálido para el inicio del gradiente */
+  --color-bg2: rgb(0, 17, 82); /* Naranja brillante para el fin del gradiente */
+  --color1: 255, 163, 67; /* Naranja para g1 */
+  --color2: 255, 209, 102; /* Amarillo para g2 */
+  --color3: 135, 60, 190; /* Púrpura para g3 */
+  --color4: 255, 94, 77; /* Rojo para g4 */
+  --color5: 255, 105, 180; /* Rosa para g5 */
+  --color-interactive: 135, 60, 190; /* Púrpura para interactive */
+  --circle-size: 80%;
+  --blending: soft-light; /* Ajustar según sea necesario para el efecto de mezcla deseado */
+}
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+/* Fondo dinámico de gradiente */
+.gradient-bg {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  overflow: hidden;
+  background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+#animatedText {
+  font-family: 'Roboto', sans-serif;
+  font-size: clamp(2rem, 5vw, 6rem); /* Adapta el tamaño del texto a diferentes pantallas */
+  font-weight: 500; /* Peso de la fuente para mejorar la legibilidad */
+  color: white; /* Color blanco para el texto */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto para mejorar el contraste sobre el fondo */
+  animation: none; /* Desactivar cualquier animación */
+}
+
+.gradients-container {
+  filter: blur(40px);
+  width: 100%;
+  height: 100%;
+}
+
+/* Animaciones para los círculos */
+.g1, .g2, .g3, .g4, .g5, .interactive {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 50%) no-repeat;
+  mix-blend-mode: var(--blending);
+  border-radius: 50%;
+}
+
+.gradient-bg {
+  background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+}
+
+.g1 {
+  background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveVertical 5s ease infinite; /* Reducido de 30s a 15s */
+}
+
+.g2 {
+  background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveInCircle 5s reverse infinite; /* Reducido de 20s a 10s */
+}
+
+.g3 {
+  background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveInCircle 10s linear infinite; /* Reducido de 40s a 20s */
+}
+
+.g4 {
+  background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  animation: moveHorizontal 10s ease infinite; /* Reducido de 40s a 20s */
+}
+
+.g5 {
+  background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%);
+  width: calc(var(--circle-size) * 2);
+  height: calc(var(--circle-size) * 2);
+  animation: moveInCircle 5s ease infinite; /* Reducido de 20s a 10s */
+}
+
+.interactive {
+  background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%);
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  animation: moveInCircle 10s ease infinite; /* Añadido para efecto */
+}
+
+
+/* Animaciones */
+@keyframes moveInCircle {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes moveVertical {
+  0% { transform: translateY(-50%); }
+  50% { transform: translateY(50%); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes moveHorizontal {
+  0% { transform: translateX(-50%) translateY(-10%); }
+  50% { transform: translateX(50%) translateY(10%); }
+  100% { transform: translateX(-50%) translateY(-10%); }
+}
+
+/* Estilo para el contenedor principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+/* Estilos para el formulario específico */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 50%; /* Ajustar el ancho a un 50% de la pantalla */
+  max-width: 600px; /* Limitar el ancho máximo */
+  margin: 20px auto; /* Centrar y añadir algo de espacio superior/inferior */
+  font-family: 'Roboto', sans-serif;
+}
+
+form input, form select, form textarea {
+  width: 100%; /* Hacer que los campos ocupen todo el ancho del formulario */
+  margin-bottom: 20px; /* Añadir espacio debajo de cada campo */
+  padding: 15px 10px; /* Aumentar el relleno dentro de los campos */
+  border: 2px solid orange;
+  border-radius: 5px;
+  background: transparent;
+  font-size: 16px;
+  transition: background-color 0.3s, border 0.3s;
+}
+
+form input:focus, form select:focus, form textarea:focus {
+  background-color: #fff; /* Cambiar el color de fondo al hacer focus */
+  outline-offset: 4px;
+  border-color: #ff6600; /* Color de borde al enfocar */
+}
+
+/* Asegurar que los textarea también tengan un buen tamaño */
+form textarea {
+  height: 100px; /* Definir una altura para los textarea */
+  resize: vertical; /* Permitir que el usuario ajuste la altura */
+}
+
+form button {
+  background-color: #051E42;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%; /* Hacer que el botón ocupe todo el ancho */
+  font-size: 16px;
+}
+
+form button:hover {
+  background-color: #ff6600; /* Cambiar el color al hacer hover */
+}
+
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+  form {
+    width: 90%; /* Hacer que el formulario ocupe más espacio en pantallas pequeñas */
+  }
+}
+
+.navbar {
+  background: linear-gradient(45deg, #ffbc00, #ff0058);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  color: white;
+  font-family: 'Roboto', sans-serif;
+
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px 15px;
+  display: inline-block;
+}
+
+.navbar a:hover {
+  background-color: #ff6600;
+  border-radius: 5px;
+}

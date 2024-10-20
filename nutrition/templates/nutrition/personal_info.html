@@ -6,21 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información Personal</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
+    <div class="gradient-bg">
+        <div class="gradients-container">
+            <div class="g1"></div>
+            <div class="g2"></div>
+            <div class="g3"></div>
+            <div class="g4"></div>
+            <div class="g5"></div>
+            <div class="interactive"></div>
+        </div>
+    </div>
+
     <!-- Barra de navegación -->
     <div class="navbar">
-        <a href="{% url 'patient_home' %}" class="icon-home">
+        <a href="{% url 'doctor_home' %}" class="icon-home">
             <i class="fas fa-home"></i> Inicio
         </a>
+        
+        <h2>Editar Perfil  {{ user.username }}</h1>
+
         <a href="{% url 'home' %}" class="icon-logout">
             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
         </a>
     </div>
-
-    <div class="container">
-        <h1>Información Personal</h1>
-
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container">       
         <!-- Mostrar mensajes de error si existen -->
         {% if error %}
             <div class="alert alert-danger">{{ error }}</div>
@@ -30,7 +48,11 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn">Guardar cambios</button>
+            <button class="button-container">
+                <div class="shadow"></div>
+                <div class="edge"></div>
+                <div class="front">Guardar Perfil 💾</div>
+            </button>
         </form>
 
         <!-- Enlaces de navegación -->
@@ -39,8 +61,6 @@
         </div>
     </div>
 
-    <footer>
-        <p>© 2024 Nutrition App. Todos los derechos reservados.</p>
-    </footer>
+    
 </body>
 </html>
