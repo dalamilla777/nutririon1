@@ -1,18 +1,17 @@
-<!-- ver_citas_doctor.html -->
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Citas</title>
+    <title>Lista de Doctores</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <!-- Barra de navegación -->
     <div class="navbar">
-        <a href="{% url 'home' %}" class="icon-home">
+        <a href="{% url 'patient_home' %}" class="icon-home">
             <i class="fas fa-home"></i> Inicio
         </a>
         <a href="{% url 'home' %}" class="icon-logout">
@@ -20,15 +19,15 @@
         </a>
     </div>
 
-    <h1>Mis Citas</h1>
-    <ul>
-        {% for cita in citas %}
-        <li>{{ cita.fecha }} - {{ cita.hora }} con {{ cita.paciente.username }}</li>
-        {% empty %}
-        <li>No tienes citas programadas.</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'gestionar_citas' %}" class="btn">Gestionar Citas</a>
-    <a href="{% url 'doctor_home' %}" class="btn">Volver al Inicio</a>
+    <div class="container">
+        <h1>Lista de Doctores</h1>
+        <ul>
+            {% for doctor in doctores %}
+                <li>
+                    <a href="{% url 'ver_doctor' doctor.id %}">{{ doctor.user.username }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
-</html> 
+</html>

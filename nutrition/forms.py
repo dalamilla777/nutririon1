@@ -121,3 +121,15 @@ class NotaForm(forms.ModelForm):
         model = Nota
         fields = ['contenido']
 
+
+from django import forms
+from .models import FoodIntake
+
+class FoodIntakeForm(forms.ModelForm):
+    class Meta:
+        model = FoodIntake
+        fields = ['food_item', 'quantity']
+        labels = {
+            'food_item': 'Alimento',
+            'quantity': 'Cantidad (gramos)'
+        }

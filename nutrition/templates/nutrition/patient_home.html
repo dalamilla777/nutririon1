@@ -37,9 +37,17 @@
             <p><strong>Restricciones Alimentarias:</strong> {{ user.patientprofile.dietary_restrictions }}</p>
         </div>
 
+        <!-- Enlace para registrar alimentos -->
+        <a href="{% url 'food_intake' %}" class="btn">Registrar Ingesta de Alimentos</a>
+
         <!-- Enlace para agendar cita -->
         <div class="button-group">
             <a href="{% url 'agendar_cita' %}" class="btn">Agendar Cita con Doctor</a>
+        </div>
+
+        <!-- Enlace para listar doctores -->
+        <div class="button-group">
+            <a href="{% url 'listar_doctores' %}" class="btn">Ver Doctores</a>
         </div>
 
         <!-- Historial de citas y notas del doctor -->
@@ -47,10 +55,6 @@
             <h2>Historial de Citas</h2>
             <a href="{% url 'ver_historial_paciente' user.id %}" class="btn">Ver Historial de Citas</a>
         </div>
-        <br>
-<br>
-<br>
-<br>
 
         <div class="card">
             <h2>Notas del Doctor</h2>
