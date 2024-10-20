@@ -820,6 +820,6 @@ ul li.empty {
 .specific-template .card {
   flex: 1 1 calc(45% - 20px); /* Hace que las tarjetas ocupen el 45% del ancho y se ajusten */
   min-width: 280px; /* Ancho mínimo para evitar que se hagan muy pequeñas */
-  margin-bottom: 20px; /* Espacio entre las filas */
+  margin-bottom: 20px; /* Esssspacio entre las filas */
 }
 
