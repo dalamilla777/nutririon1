@@ -9,61 +9,125 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <div class="gradient-bg">
+        <div class="gradients-container">
+            <div class="g1"></div>
+            <div class="g2"></div>
+            <div class="g3"></div>
+            <div class="g4"></div>
+            <div class="g5"></div>
+            <div class="interactive"></div>
+        </div>
+    </div>
     <!-- Barra de navegación -->
     <div class="navbar">
         <a href="{% url 'home' %}" class="icon-home">
             <i class="fas fa-home"></i> Inicio
+        </a>
+        <a href="javascript:void(0)" class="icon-menu" onclick="openMenu()">
+            <i class="fas fa-bars"></i> Menú
         </a>
         <a href="{% url 'home' %}" class="icon-logout">
             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
         </a>
     </div>
 
+<!-- Menú lateral que aparece al presionar el botón -->
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+        <a href="{% url 'patient_profile' %}">Editar Mi Perfil</a>
+        
+    </div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
     <div class="container">
         <h1>Bienvenido, {{ user.username }}</h1>
-        <p>Aquí puedes ver tu perfil nutricional y gestionar tus citas con tu doctor.</p>
+        <h2>Aquí puedes ver tu perfil nutricional y gestionar tus citas con tu doctor.</h2>
         
-        <!-- Botón para editar el perfil -->
-        <div class="button-group">
-            <a href="{% url 'patient_profile' %}" class="btn">Editar Perfil</a>
-        </div>
+       
 
-        <!-- Mostrar información del perfil nutricional -->
-        <div class="card">
-            <h2>Perfil Nutricional</h2>
-            <p><strong>Altura:</strong> {{ user.patientprofile.height }} cm</p>
-            <p><strong>Peso:</strong> {{ user.patientprofile.weight }} kg</p>
-            <p><strong>Objetivos Nutricionales:</strong> {{ user.patientprofile.nutrition_goals }}</p>
-            <p><strong>Restricciones Alimentarias:</strong> {{ user.patientprofile.dietary_restrictions }}</p>
-        </div>
+        <div class="specific-template"><!-- Mostrar información del perfil nutricional -->
+            <div class="card-container">
+            
+                <div class="card nutritional-card">
+                    <div class="content">
+                        <h2>Perfil Nutricional</h2>
+                        <ul>
+                            <li><strong>Altura:</strong> {{ user.patientprofile.height }} cm</li>
+                            <li><strong>Peso:</strong> {{ user.patientprofile.weight }} kg</li>
+                            <li><strong>Objetivos Nutricionales:</strong> {{ user.patientprofile.nutrition_goals }}</li>
+                            <li><strong>Restricciones Alimentarias:</strong> {{ user.patientprofile.dietary_restrictions }}</li>
+                        </ul>
+                    </div>
+                </div>
+            
+                <!-- Tarjeta para agendar cita -->
+                <div class="card schedule-card">
+                    <div class="content">
+                        <h2>Agendar Cita</h2>
+                        <a href="{% url 'agendar_cita' %}" button Class>
+                            <button class="button-container">
+                                <div class="shadow"></div>
+                                <div class="edge"></div>
+                                <div class="front">Agendar cita con el doctor</div>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            
+                <!-- Tarjeta para el historial de citas -->
+                <div class="card history-card">
+                    <div class="content">
+                        <h2>Historial de Citas</h2>
+                        <a href="{% url 'ver_historial_paciente' user.id %}" Button class>
+                            <button class="button-container">
+                            <div class="shadow"></div>
+                            <div class="edge"></div>
+                            <div class="front">Ver historial de citas</div>
+                        </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="card drnotes-card">
+                    <div class="content">
+                        <h2>Notas del Doctor</h2>
+                        <a href="{% url 'ver_notas' user.id %}" button Class>
+                            <button class="button-container">
+                                <div class="shadow"></div>
+                                <div class="edge"></div>
+                                <div class="front">Ver notas del doctor</div>
+                            </button>
+                </div>
+            </div>
 
-        <!-- Enlace para registrar alimentos -->
-        <a href="{% url 'food_intake' %}" class="btn">Registrar Ingesta de Alimentos</a>
-
-        <!-- Enlace para agendar cita -->
-        <div class="button-group">
-            <a href="{% url 'agendar_cita' %}" class="btn">Agendar Cita con Doctor</a>
+            </div>
         </div>
+        
+        <br>
+<br>
+<br>
+<br>
 
-        <!-- Enlace para listar doctores -->
-        <div class="button-group">
-            <a href="{% url 'listar_doctores' %}" class="btn">Ver Doctores</a>
-        </div>
-
-        <!-- Historial de citas y notas del doctor -->
-        <div class="card">
-            <h2>Historial de Citas</h2>
-            <a href="{% url 'ver_historial_paciente' user.id %}" class="btn">Ver Historial de Citas</a>
-        </div>
-
-        <div class="card">
-            <h2>Notas del Doctor</h2>
-            <a href="{% url 'ver_notas' user.id %}" class="btn">Ver Notas del Doctor</a>
-        </div>
+        
     </div>
 
     <footer>
-        <p>© 2024 Nutrition App. Todos los derechos reservados.</p>
+        <p></p>
     </footer>
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").classList.add("open");
+        }
+
+        function closeMenu() {
+            document.getElementById("sideMenu").classList.remove("open");
+        }
+    </script>
 </body>
 </html>
