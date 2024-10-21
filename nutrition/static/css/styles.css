@@ -169,12 +169,15 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* Mantiene los elementos alineados al principio */
   align-items: center;
   text-align: center;
-  height: 100vh;
+  height: 100vh; /* Mantiene la altura al 100% de la ventana */
+  overflow-y: auto; /* Permite el desplazamiento vertical si el contenido excede la altura disponible */
   padding: 20px;
+  position: relative; /* Fija la posición del contenedor */
 }
+
 
 
 
@@ -182,7 +185,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 70px;
+  padding: 55px;
   background-color: #f0f0f0;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

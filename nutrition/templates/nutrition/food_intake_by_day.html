@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,7 +7,6 @@
     <title>Alimentos Consumidos</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
 <body>
     <div class="gradient-bg">
@@ -21,16 +19,16 @@
             <div class="interactive"></div>
         </div>
     </div>
+
     <div class="navbar">
-        <a href="{% url 'doctor_home' %}" class="icon-home">
+        <a href="{% if is_doctor_viewing %}{% url 'doctor_home' %}{% else %}{% url 'patient_home' %}{% endif %}" class="icon-home">
             <i class="fas fa-home"></i> Inicio
         </a>
-        
-
         <a href="{% url 'home' %}" class="icon-logout">
             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
         </a>
     </div>
+
     <div class="container">
         <h1>{% if is_doctor_viewing %}Alimentos de {{ patient.username }}{% else %}Mis Alimentos{% endif %} - {{ selected_date }}</h1>
 
@@ -41,9 +39,8 @@
             <button class="button">
                 <div class="shadow"></div>
                 <div class="edge"></div>
-                <br>
-                <div class="front">Ver Almiento</div>
-                </button>
+                <div class="front">Ver Alimentos</div>
+            </button>
         </form>
 
         <!-- Mostrar los alimentos consumidos en el día -->
@@ -60,6 +57,36 @@
             {% endfor %}
         </ul>
         
+        <!-- Mostrar los platillos analizados -->
+        <h2>Platillos Analizados:</h2>
+        <ul>
+            {% for dish in dish_analyses %}
+                <li>
+                    <strong>Fecha de análisis:</strong> {{ dish.fecha_analisis }} <br>
+                    <strong>Calorías:</strong> {{ dish.calorias }} <br>
+                    <strong>Ingredientes:</strong> {{ dish.ingredientes }} <br>
+                    <strong>¿Es Sano?:</strong> {{ dish.es_sano|yesno:"Sí,No" }}
+                </li>
+                <hr>
+            {% empty %}
+                <li>No hay platillos analizados.</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Mostrar los ingredientes analizados -->
+        <h2>Ingredientes Analizados:</h2>
+        <ul>
+            {% for ingredient in ingredient_analyses %}
+                <li>
+                    <strong>Fecha de análisis:</strong> {{ ingredient.fecha_analisis }} <br>
+                    <strong>Ingredientes Detectados:</strong> {{ ingredient.ingredientes }} <br>
+                    <strong>Recomendación:</strong> {{ ingredient.recomendacion }}
+                </li>
+                <hr>
+            {% empty %}
+                <li>No hay ingredientes analizados.</li>
+            {% endfor %}
+        </ul>
 
         <!-- Enlace para regresar -->
         <div>
@@ -68,10 +95,9 @@
                     <div class="shadow"></div>
                     <div class="edge"></div>
                     <div class="front">Regresar</div>
-                    </button>
+                </button>
             </a>
         </div>
-        
     </div>
 </body>
 </html>

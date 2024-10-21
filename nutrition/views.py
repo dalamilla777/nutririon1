@@ -511,11 +511,19 @@ def food_intake_by_day_view(request, patient_id=None):
     # Obtener los alimentos registrados en esa fecha
     food_intakes = FoodIntake.objects.filter(user=patient, date=selected_date)
 
+    # Obtener los platillos analizados por el paciente
+    dish_analyses = FoodAnalysis.objects.filter(user=patient)
+
+    # Obtener los ingredientes analizados por el paciente
+    ingredient_analyses = IngredientAnalysis.objects.filter(user=patient)
+
     context = {
         'food_intakes': food_intakes,
         'selected_date': selected_date,
         'patient': patient,
-        'is_doctor_viewing': patient_id is not None
+        'is_doctor_viewing': patient_id is not None,
+        'dish_analyses': dish_analyses,
+        'ingredient_analyses': ingredient_analyses,
     }
 
     return render(request, 'nutrition/food_intake_by_day.html', context)
