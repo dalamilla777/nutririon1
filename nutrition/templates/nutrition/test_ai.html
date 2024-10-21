@@ -1,11 +1,10 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio Paciente</title>
+    <title>Analizar platillo</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -20,21 +19,32 @@
             <div class="interactive"></div>
         </div>
     </div>
+
+    <!-- Barra de navegación -->
     <div class="navbar">
         <a href="{% url 'patient_home' %}" class="icon-home">
             <i class="fas fa-home"></i> Inicio
-        </a>
         </a>
         <a href="{% url 'home' %}" class="icon-logout">
             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
         </a>
     </div>
-    <h1>Prueba de IA</h1>
+
+    <!-- Título principal -->
+    <h1>Analizar Platillo</h1>
+
+    <!-- Formulario para subir imagen del platillo -->
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="image">Subir Imagen:</label>
         <input type="file" name="image" id="image" required>
-        <button type="submit">Analizar</button>
+        <br>
+        
+        <button class="button">
+            <div class="shadow"></div>
+            <div class="edge"></div>
+            <div class="front">Analizar</div>
+        </button>
     </form>
 
     <!-- Mostrar el resultado del análisis en formato JSON bonito -->
@@ -45,26 +55,22 @@
 
     <!-- Tabla para mostrar los análisis previos -->
     <h2>Tus Análisis Anteriores</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Calorías</th>
-                <th>Ingredientes</th>
-                <th>¿Es Sano?</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for analysis in analyses %}
-            <tr>
-                <td>{{ analysis.fecha_analisis }}</td>
-                <td>{{ analysis.calorias }}</td>
-                <td>{{ analysis.ingredientes }}</td>
-                <td>{{ analysis.es_sano|yesno:"Sí,No" }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<ul>
+    {% for analysis in analyses %}
+    <li>
+        <strong>Fecha:</strong> {{ analysis.fecha_analisis }} <br>
+        <strong>Calorías:</strong> {{ analysis.calorias }} <br>
+        <strong>Ingredientes:</strong> {{ analysis.ingredientes }} <br>
+        <strong>¿Es Sano?:</strong> {{ analysis.es_sano|yesno:"Sí,No" }}
+    </li>
+    <hr> <!-- Línea divisoria para separar los elementos -->
+    {% endfor %}
+</ul>
+
+    <!-- Enlaces de navegación -->
+    <div class="footer">
+        <a href="{% url 'patient_home' %}">Volver al Inicio</a> | <a href="{% url 'home' %}">Cerrar Sesión</a>
+    </div>
+
 </body>
 </html>
-
