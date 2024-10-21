@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Paciente</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="gradient-bg">
+        <div class="gradients-container">
+            <div class="g1"></div>
+            <div class="g2"></div>
+            <div class="g3"></div>
+            <div class="g4"></div>
+            <div class="g5"></div>
+            <div class="interactive"></div>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Eliminar Paciente</h1>
+        <h2>¿Estás seguro de que deseas eliminar al paciente <strong>{{ paciente.user.username }}</strong>?</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <div class="shadow"></div>
+                <div class="edge"></div>
+                <div class="front">Eliminar </div>
+                </button>
+            <br>
+        </form>
+    
+        <a href="{% url 'elegir_paciente_para_nota' %}" class="button">Cancelar</a>
+    </div>
+</body>
+</html>

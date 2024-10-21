@@ -1,4 +1,3 @@
-<!-- ver_historial_paciente.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +7,6 @@
     <title>Historial de Paciente</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
 <body>
     <div class="gradient-bg">
@@ -21,20 +19,48 @@
             <div class="interactive"></div>
         </div>
     </div>
+    
     <div class="navbar">
-        <a href="{% url 'patient_home' %}" class="icon-home">
+        <a href="{% url 'doctor_home' %}" class="icon-home">
             <i class="fas fa-home"></i> Inicio
-        </a>
         </a>
         <a href="{% url 'home' %}" class="icon-logout">
             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
         </a>
     </div>
-    <h1>Historial de {{ paciente.username }}</h1>
+
+    <h1>Historial del Paciente: {{ paciente.username }}</h1>
+
+    <h2>Información Básica</h2>
+    <ul>
+        <li><strong>Nombre de Usuario:</strong> {{ paciente.username }}</li>
+        <li><strong>Email:</strong> {{ paciente.email }}</li>
+        <li><strong>Fecha de Nacimiento:</strong> {{ patient_profile.birth_date|date:"d/m/Y" }}</li>
+        <li><strong>Número de Teléfono:</strong> {{ patient_profile.phone_number }}</li>
+        <li><strong>Altura:</strong> {{ patient_profile.height }} m</li>
+        <li><strong>Peso:</strong> {{ patient_profile.weight }} kg</li>
+        <li><strong>Género:</strong> {{ patient_profile.get_gender_display }}</li>
+    </ul>
+
+    <h2>Información Nutricional</h2>
+    <ul>
+        <li><strong>Metas Nutricionales:</strong> {{ patient_profile.nutrition_goals }}</li>
+        <li><strong>Restricciones Dietéticas:</strong> {{ patient_profile.dietary_restrictions }}</li>
+        <li><strong>Alergias:</strong> {{ patient_profile.allergies }}</li>
+        <li><strong>Intolerancias:</strong> {{ patient_profile.intolerances }}</li>
+        <li><strong>Preferencias Alimenticias:</strong> {{ patient_profile.food_preferences }}</li>
+    </ul>
+
+    <h2>Notas del Doctor</h2>
     <ul>
         {% for nota in notas %}
-        <li>{{ nota.fecha }}: {{ nota.contenido }}</li>
+        <li><strong>{{ nota.fecha|date:"d/m/Y" }}:</strong> {{ nota.contenido }}</li>
+        {% empty %}
+        <li>No hay notas para este paciente.</li>
         {% endfor %}
     </ul>
+
+    <a href="{% url 'doctor_home' %}" class="btn">Regresar</a>
+
 </body>
 </html>

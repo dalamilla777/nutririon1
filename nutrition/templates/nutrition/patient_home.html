@@ -19,18 +19,35 @@
             <div class="interactive"></div>
         </div>
     </div>
+    
+    
     <!-- Barra de navegación -->
     <div class="navbar">
+        <a href="javascript:void(0)" class="icon-menu" onclick="openMenu()">
+            <i class="fas fa-bars"></i> Menú
+        </a>
+       
         <a href="{% url 'home' %}" class="icon-home">
             <i class="fas fa-home"></i> Inicio
         </a>
-        <a href="javascript:void(0)" class="icon-menu" onclick="openMenu()">
-            <i class="fas fa-bars"></i> Menú
+            <!-- Botón para test_ai (análisis de platos) -->
+        <a href="{% url 'test_ai' %}" class="icon-test-ai">
+            <i class="fas fa-utensils"></i> Analizar Plato
+        </a>
+        
+
+        
+        <a href="{% url 'analyze_ingredients' %}" class="icon-ingredients">
+            <i class="fas fa-seedling"></i> Analizar Ingredientes
         </a>
         <a href="{% url 'home' %}" class="icon-logout">
             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
         </a>
+      
     </div>
+    <br>
+    
+    
 
 <!-- Menú lateral que aparece al presionar el botón -->
     <div id="sideMenu" class="side-menu">
@@ -84,20 +101,30 @@
                 <!-- Tarjeta para el historial de citas -->
                 <div class="card history-card">
                     <div class="content">
-                        <h2>Historial de Citas</h2>
-                        <a href="{% url 'ver_historial_paciente' user.id %}" Button class>
+                        <h2>Dietas</h2>
+                        <p>Registra y haz seguimiento de tus alimentos, calorías y nutrientes.</p>
+                        <a href="{% url 'food_intake' %}">
                             <button class="button-container">
-                            <div class="shadow"></div>
-                            <div class="edge"></div>
-                            <div class="front">Ver historial de citas</div>
-                        </button>
+                                <div class="shadow"></div>
+                                <div class="edge"></div>
+                                <div class="front">Registrar Alimentos</div>
+                            </button>
+                        </a>
+                
+                        <h2>Mis Alimentos por Día</h2>
+                        <a href="{% url 'food_intake_by_day' %}">
+                            <button class="button-container">
+                                <div class="shadow"></div>
+                                <div class="edge"></div>
+                                <div class="front">Ver Alimentos de Hoy</div>
+                            </button>
                         </a>
                     </div>
                 </div>
                 <div class="card drnotes-card">
                     <div class="content">
                         <h2>Notas del Doctor</h2>
-                        <a href="{% url 'ver_notas' user.id %}" button Class>
+                        <a href="{% url 'ver_notas_paciente'  %}" button Class>
                             <button class="button-container">
                                 <div class="shadow"></div>
                                 <div class="edge"></div>
@@ -105,6 +132,7 @@
                             </button>
                 </div>
             </div>
+            
 
             </div>
         </div>
@@ -116,6 +144,7 @@
 
         
     </div>
+    
 
     <footer>
         <p></p>

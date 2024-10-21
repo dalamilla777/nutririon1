@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmar Cita</title>
+    <title>Elegir Paciente</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -19,7 +19,6 @@
             <div class="interactive"></div>
         </div>
     </div>
-<!-- Barra de navegación -->
     <div class="navbar">
         <a href="{% url 'doctor_home' %}" class="icon-home">
             <i class="fas fa-home"></i> Inicio
@@ -28,19 +27,21 @@
             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
         </a>
     </div>
+    <br>
+    <br>
+    <br>
 
     <div class="container">
-        <h1>Confirmar Cita</h1>
-        <h2>¿Está seguro de que desea confirmar esta cita?</h2>
-        <p><strong>Paciente:</strong> {{ cita.paciente.username }}</p>
-        <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
-        <p><strong>Hora:</strong> {{ cita.hora }}</p>
-        <form method="post">
-            {% csrf_token %}
-            <button type="submit" name ="accion" value="confirmar" class="btn">Confirmar</button>
-            <button type="submit" name="accion" value="rechazar" class="btn">Rechazar</button>
-            
-        </form>
+        <h1>Elegir Paciente para Dejar Nota</h1>
+        <ul>
+            {% for paciente in pacientes %}
+                <li>
+                    {{ paciente.user.username }} - {{ paciente.user.email }}
+                    <a href="{% url 'agregar_nota_paciente' paciente.user.id %}" class="btn">Agregar Nota</a>
+                    <a href="{% url 'eliminar_paciente' paciente.user.id %}" class="btn btn-danger">Eliminar</a>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>

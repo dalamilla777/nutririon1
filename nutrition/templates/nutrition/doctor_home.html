@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio Doctor</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
 </head>
 <body>
     <div class="gradient-bg">
@@ -20,6 +20,7 @@
             <div class="interactive"></div>
         </div>
     </div>
+    
     <!-- Barra de navegación -->
     <div class="navbar">
         <a href="{% url 'home' %}" class="icon-home">
@@ -38,7 +39,11 @@
         <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
         <a href="{% url 'doctor_profile' %}">Editar Mi Perfil</a>
         <a href="{% url 'ver_citas_doctor' %}">Ver Citas con Pacientes</a>
+        <a href="{% url 'listar_pacientes_sin_asignar' %}" class="btn">Ver Pacientes Sin Asignar</a>
     </div>
+    <br>
+    <br>
+    <br>
 
     <main class="container">
         <h1>Bienvenido, Doctor {{ user.username }}</h1>
@@ -47,36 +52,50 @@
         <!-- Contenedor para las tarjetas -->
         <div class="card-container">
             <!-- Lista de pacientes -->
-            <div class="card">
+            <div class="card patients-card">
                 <div class="content">
                     <h2>Mis Pacientes</h2>
                     <ul>
-                        {% for paciente in pacientes %}
+                        {% for paciente in patients %}
                             <li>
                                 <strong>{{ paciente.user.username }}</strong> - {{ paciente.user.email }}
-                                <a href="{% url 'ver_historial_paciente' paciente.id %}" class="btn">Ver Historial</a>
-                                <a href="{% url 'agregar_nota_paciente' paciente.id %}" class="btn">Agregar Nota</a>
+                                <a href="{% url 'ver_historial_paciente' paciente.user.username %}" class="button">Ver Historial</a>
+                                <a href="{% url 'doctor_food_intake_by_day' paciente.user.id %}" class="button">Ver Alimentos del Paciente</a>
                             </li>
                         {% endfor %}
                     </ul>
                 </div>
             </div>
+            
+            
             <!-- Confirmación de citas -->
-            <div class="card">
+            <div class="card pending-appointments-card">
                 <div class="content">
                     <h2>Citas Pendientes</h2>
                     <ul>
                         {% for cita in citas_pendientes %}
                             <li>
                                 <strong>{{ cita.paciente.user.username }}</strong> - {{ cita.fecha }} a las {{ cita.hora }}
-                                <a href="{% url 'confirmar_cita' cita.id %}" class="btn">Confirmar Cita</a>
-                                <a href="{% url 'sugerir_fecha' cita.id %}" class="btn">Sugerir Nueva Fecha</a>
+                                <div class="buttons-container">
+                                    <a href="{% url 'confirmar_cita' cita.id %}" class="button">Confirmar Cita</a>
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
                 </div>
             </div>
-        </div>
+            
+            <!-- Nueva tarjeta para agregar notas -->
+            <div class="card add-notes-card">
+                <div class="content">
+                    <h2>Agregar Nota a Pacientes</h2>
+                    <div class="buttons-container">
+                        <a href="{% url 'elegir_paciente_para_nota' %}" class="btn">Elegir Paciente</a>
+                    </div>
+                </div>
+            </div>
+            
+        
     </main>
 
     <div class="footer">

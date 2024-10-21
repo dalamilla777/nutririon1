@@ -10,7 +10,11 @@ class PatientProfile(models.Model):
     doctor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='patients')
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
-    height = models.FloatField(null=True, blank=True)
+    height = models.FloatField(
+        null=True, 
+        blank=True, 
+        validators=[MinValueValidator(1.30), MaxValueValidator(2.30)]
+    )
     weight = models.FloatField(null=True, blank=True)
     gender = models.CharField(max_length=10, choices=[('M', 'Male'), ('F', 'Female')], blank=True)
     nutrition_goals = models.TextField(blank=True, null=True)
@@ -91,3 +95,22 @@ class FoodIntake(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.food_item} - {self.date} {self.time}"
+    
+class FoodAnalysis(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Relacionar el análisis con el usuario
+    calorias = models.IntegerField()
+    ingredientes = models.TextField()  # Almacenar como un texto separado por comas
+    es_sano = models.BooleanField()
+    fecha_analisis = models.DateTimeField(auto_now_add=True)  # Fecha en que se realizó el análisis
+
+    def __str__(self):
+        return f"Análisis de {self.user.username} - {self.fecha_analisis}"
+    
+class IngredientAnalysis(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ingredientes = models.TextField()  # Lista de ingredientes detectados
+    recomendacion = models.TextField()  # Recomendación del platillo a preparar
+    fecha_analisis = models.DateTimeField(auto_now_add=True)  # Fecha del análisis
+
+    def __str__(self):
+        return f"Análisis de ingredientes de {self.user.username} - {self.fecha_analisis}"

@@ -62,9 +62,13 @@ class PasswordResetForm(forms.Form):
         return cleaned_data
     
 class PatientProfileForm(forms.ModelForm):
-        class Meta:
-            model = PatientProfile
-            fields = ['birth_date', 'phone_number', 'weight', 'gender', 'allergies', 'intolerances', 'food_preferences']
+    HEIGHT_CHOICES = [(round(x / 100, 2), f'{x / 100:.2f} metros') for x in range(130, 231)]
+
+    height = forms.ChoiceField(choices=HEIGHT_CHOICES, label="Height")
+
+    class Meta:
+        model = PatientProfile
+        fields = ['birth_date', 'phone_number', 'height', 'weight', 'gender', 'nutrition_goals', 'dietary_restrictions', 'allergies', 'intolerances', 'food_preferences']
 
 class DoctorProfileForm(forms.ModelForm):
     class Meta:
@@ -88,7 +92,6 @@ class DisponibilidadForm(forms.ModelForm):
     class Meta:
         model = DisponibilidadDoctor
         fields = ['dia', 'hora_inicio', 'hora_fin']
-
 
 
 

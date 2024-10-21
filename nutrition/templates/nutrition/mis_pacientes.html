@@ -1,0 +1,15 @@
+<h2>Mis Pacientes</h2>
+<ul>
+    {% if pacientes %}
+        {% for paciente in pacientes %}
+            <li>
+                <strong>{{ paciente.user.username }}</strong> - {{ paciente.user.email }}
+                <a href="{% url 'ver_historial_paciente' paciente.id %}" class="btn">Ver Historial</a>
+                <a href="{% url 'agregar_nota_paciente' paciente.id %}" class="btn">Agregar Nota</a>
+                <a href="{% url 'doctor_food_intake_by_day' paciente.user.id %}" class="btn">Ver Alimentos del Paciente</a>
+            </li>
+        {% endfor %}
+    {% else %}
+        <li>No tienes pacientes asignados.</li>
+    {% endif %}
+</ul>

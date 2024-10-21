@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Ingredientes - Recomendación Alimentaria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            margin-top: 20px;
+        }
+        form {
+            margin: 20px 0;
+            text-align: center;
+        }
+        label {
+            font-size: 18px;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            white-space: pre-wrap;  /* Mantener el formato del JSON */
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Análisis de Ingredientes - Recomendación Alimentaria</h1>
+    
+    <!-- Formulario para subir la imagen -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="image">Subir Imagen de Ingredientes:</label>
+        <br>
+        <input type="file" name="image" id="image" required>
+        <br>
+        <button type="submit">Analizar Ingredientes</button>
+    </form>
+
+    <!-- Mostrar el resultado del análisis en formato JSON -->
+    {% if formatted_json %}
+    <h2>Resultado del Análisis:</h2>
+    <pre>{{ formatted_json }}</pre>
+    {% endif %}
+
+    <!-- Mostrar el historial de análisis previos -->
+    <h2>Tus Análisis Anteriores</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Ingredientes Detectados</th>
+                <th>Recomendación</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for analysis in analyses %}
+            <tr>
+                <td>{{ analysis.fecha_analisis }}</td>
+                <td>{{ analysis.ingredientes }}</td>
+                <td>{{ analysis.recomendacion }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

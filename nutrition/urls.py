@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     # Página principal genérica
     path('', views.home, name='home'),
@@ -36,9 +37,11 @@ urlpatterns = [
     path('confirmar_cita/<int:cita_id>/', views.confirmar_cita, name='confirmar_cita'),
 
     # Historial y notas del paciente
-    path('historial-paciente/<int:paciente_id>/', views.ver_historial_paciente, name='ver_historial_paciente'),
+    path('historial-paciente/<str:username>/', views.ver_historial_paciente, name='ver_historial_paciente'),
     path('agregar-nota/<int:paciente_id>/', views.agregar_nota_paciente, name='agregar_nota_paciente'),
-    path('ver-notas/<int:paciente_id>/', views.ver_notas, name='ver_notas'),
+    
+    # Elimina la URL que da error, y usa solo la siguiente
+    path('ver-notas/', views.ver_notas_paciente, name='ver_notas_paciente'),
 
     # Ver citas
     path('ver-citas/', views.ver_citas_paciente, name='ver_citas_paciente'),
@@ -52,4 +55,18 @@ urlpatterns = [
     path('listar_doctores/', views.listar_doctores, name='listar_doctores'),
     path('ver_perfil_doctor/<int:doctor_id>/', views.ver_perfil_doctor, name='ver_doctor'),
     path('elegir_doctor/<int:doctor_id>/', views.elegir_doctor, name='elegir_doctor'),
+    path('elegir-paciente/', views.elegir_paciente_para_nota, name='elegir_paciente_para_nota'),
+    path('agregar-nota/<int:paciente_id>/', views.agregar_nota_paciente, name='agregar_nota_paciente'),
+    path('eliminar-paciente/<int:paciente_id>/', views.eliminar_paciente, name='eliminar_paciente'),
+    path('dietas/dia/', views.food_intake_by_day_view, name='food_intake_by_day'),  # Para el paciente
+    path('listar_pacientes_sin_asignar/', views.listar_pacientes_sin_asignar, name='listar_pacientes_sin_asignar'),
+    path('doctor/dietas/paciente/<int:patient_id>/', views.food_intake_by_day_view, name='doctor_food_intake_by_day'),
+    path('asignar_paciente/<int:paciente_id>/', views.asignar_paciente, name='asignar_paciente'),
+    path('mis_pacientes/', views.mis_pacientes, name='mis_pacientes'),
+    path('test_ai/', views.test_ai_view, name='test_ai'),
+    path('test_ai_ingredients/', views.test_ai_view, name='test_ai_ingredients'),
+    path('analyze_ingredients/', views.analyze_ingredients_view, name='analyze_ingredients'),
+
+
+
 ]
