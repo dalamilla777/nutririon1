@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Doctor</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <a href="{% url 'home' %}" class="icon-home">
+            <i class="fas fa-home"></i> Inicio
+        </a>
+        <a href="{% url 'home' %}" class="icon-logout">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+    </div>
+
+    <div class="container">
+        <h1>Perfil del Doctor</h1>
+        <p><strong>Nombre:</strong> {{ doctor.user.username }}</p>
+        <p><strong>Email:</strong> {{ doctor.user.email }}</p>
+        <p><strong>Especialidad:</strong> {{ doctor.specialty }}</p>
+        <p><strong>Licencia Médica:</strong> {{ doctor.medical_license }}</p>
+        <p><strong>Dirección de la Clínica:</strong> {{ doctor.clinic_address }}</p>
+        <a href="{% url 'elegir_doctor' doctor.id %}" class="btn">Elegir este Doctor</a>
+    </div>
+</body>
+</html>

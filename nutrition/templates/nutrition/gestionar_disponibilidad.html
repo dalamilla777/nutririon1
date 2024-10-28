@@ -1,0 +1,27 @@
+<!-- gestionar_disponibilidad.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Disponibilidad</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Configura tu Disponibilidad</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Guardar Disponibilidad</button>
+    </form>
+
+    <h2>Tu Disponibilidad Actual</h2>
+    <ul>
+        {% for disponibilidad in disponibilidad_doctor %}
+        <li>{{ disponibilidad.dia }}: {{ disponibilidad.hora_inicio }} - {{ disponibilidad.hora_fin }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

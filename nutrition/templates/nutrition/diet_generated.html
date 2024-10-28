@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dieta Generada</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Dieta Recomendada</h1>
+
+    <img src="{{ image_url }}" alt="Imagen subida" style="width:300px;">
+
+    <h2>Dieta generada por IA</h2>
+    <p>{{ dieta }}</p>
+
+    <a href="{% url 'generate_diet' %}">Generar otra dieta</a>
+</body>
+</html>

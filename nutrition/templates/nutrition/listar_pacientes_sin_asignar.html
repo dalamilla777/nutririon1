@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<h2>Pacientes Sin Asignar</h2>
+<ul>
+    {% if pacientes_sin_doctor %}
+        {% for paciente in pacientes_sin_doctor %}
+            <li>
+                <strong>{{ paciente.user.username }}</strong> - {{ paciente.user.email }}
+                <a href="{% url 'asignar_paciente' paciente.id %}" class="btn">Asignar a Mí</a>
+            </li>
+        {% endfor %}
+    {% else %}
+        <li>No hay pacientes sin asignar.</li>
+    {% endif %}
+</ul>

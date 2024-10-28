@@ -1,0 +1,39 @@
+<!-- gestionar_citas.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Citas</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <a href="{% url 'patient_home' %}" class="icon-home">
+            <i class="fas fa-home"></i> Inicio
+        </a>
+        <a href="{% url 'home' %}" class="icon-logout">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+    </div>
+
+    <h1>Gestionar Citas</h1>
+
+    <ul>
+        {% for cita in citas %}
+        <li>
+            Cita con {{ cita.paciente.username }} el {{ cita.fecha }} a las {{ cita.hora }} - Estado: {{ cita.estado }}
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="cita_id" value="{{ cita.id }}">
+                <button type="submit" name="accion" value="confirmar" class="btn">Confirmar</button>
+                <button type="submit" name="accion" value="rechazar" class="btn">Rechazar</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

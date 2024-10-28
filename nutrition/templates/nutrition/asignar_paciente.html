@@ -1,0 +1,9 @@
+<h2>Pacientes Sin Asignar</h2>
+<ul>
+    {% for paciente in pacientes_sin_doctor %}
+        <li>
+            <strong>{{ paciente.user.username }}</strong> - {{ paciente.user.email }}
+            <a href="{% url 'asignar_paciente' paciente.id %}" class="btn">Asignar a Mi</a>
+        </li>
+    {% endfor %}
+</ul>

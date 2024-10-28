@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <!-- Enlace a tu archivo CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Opcional, para Font Awesome si no está incluido -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="login-page">
+    <div class="navbar">
+        <a href="{% url 'home' %}">
+            <i class="fas fa-home"></i> Inicio
+        </a>
+    </div>
+
+    <!-- Fondo dinámico para cubrir toda la página -->
+    <div class="gradient-bg">
+        <div class="gradients-container">
+            <div class="g1"></div>
+            <div class="g2"></div>
+            <div class="g3"></div>
+            <div class="g4"></div>
+            <div class="g5"></div>
+            <div class="interactive"></div>
+        </div>
+    </div>
+
+    <main class="container">
+        <h1>Iniciar Sesión como Paciente</h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" class="input" placeholder="Username" name="username" required>
+            <input type="password" class="input" placeholder="Password" name="password" required>
+            <br>
+                     
+            <br>
+            <button type="submit">
+                <span class="shadow"></span>
+                <span class="edge"></span>
+                <span class="front">Entrar</span>
+            </button>
+
+            <div class="footer">
+                <p>¿Olvidaste tu contraseña? <a href="{% url 'password_reset' %}">Recuperar contraseña</a></p>
+                <p>¿No tienes cuenta? <br> <a href="{% url 'register_patient' %}">Regístrate</a></p>
+            </div>
+            
+        </form>
+
+        
+    </main>
+</body>
+</html>
