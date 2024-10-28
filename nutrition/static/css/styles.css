@@ -998,3 +998,21 @@ ul li.empty {
 .edit-icon:hover {
   color: #e96d00; /* Color al pasar el ratón */
 }
+
+.logo-link {
+  color: #0c00af;
+  font-size: 25px; /* Tamaño del ícono */
+  margin-right: 250px; /* Espacio entre el ícono y el texto (si lo agregas) */
+}
+.logo-link:hover {
+  color: #e96d00; /* Color al pasar el ratón */
+}
+
+.logo-link2 {
+  color: #0c00af;
+  font-size: 30px; /* Tamaño del ícono */
+  margin-right: 450px; /* Espacio entre el ícono y el texto (si lo agregas) */
+}
+.logo-link2:hover {
+  color: #e96d00; /* Color al pasar el ratón */
+}

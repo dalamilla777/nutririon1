@@ -41,6 +41,9 @@
                     <a href="{% url 'eliminar_paciente' paciente.user.id %}" class="btn btn-danger">Eliminar</a>
                 </li>
             {% endfor %}
+            <a href="{% url 'doctor_home' %}" class="logo-link">
+                <i class="fas fa-arrow-left"></i>
+            </a>
         </ul>
     </div>
 </body>

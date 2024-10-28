@@ -35,10 +35,14 @@
                 <div class="edge"></div>
                 <div class="front">Registrarse</div>
             </button>
+            <div class="footer">
+                ¿Ya tienes una cuenta? <br> <a href="{% url 'doctor_login' %}">Iniciar Sesión</a>
+            </div>
+            <a href="{% url 'home' %}" class="logo-link">
+                <i class="fas fa-arrow-left"></i>
+            </a>
         </form>
-        <div class="footer">
-            ¿Ya tienes una cuenta? <a href="{% url 'doctor_login' %}">Iniciar Sesión</a>
-        </div>
+        
     </div>
 </body>
 </html>
