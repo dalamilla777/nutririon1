@@ -980,3 +980,21 @@ ul li.empty {
   font-size: 0.7em; /* Tamaño de fuente pequeño */
   text-align: center;
 }
+
+
+/* Ajustes para el ícono de edición */
+.edit-icon {
+  color: #051E42; /* Cambia el color si lo deseas */
+  font-size: 1.2em; /* Ajusta el tamaño si es necesario */
+  text-decoration: none;
+  margin-right: 250px;
+  /* Posicionamiento absoluto en relación con el contenedor más cercano con 'position: relative' */
+  position: absolute;
+  top: 85px; /* Ajusta esta distancia para mover el ícono verticalmente */
+  left: 450px; /* Ajusta esta distancia para mover el ícono horizontalmente */
+  transform: translate(0, -50%); /* Centra verticalmente si es necesario */
+}
+
+.edit-icon:hover {
+  color: #e96d00; /* Color al pasar el ratón */
+}

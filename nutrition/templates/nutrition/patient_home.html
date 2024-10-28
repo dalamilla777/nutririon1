@@ -77,8 +77,11 @@
             
                 <div class="card nutritional-card">
                     <div class="content">
-                        <h2><i class="fas fa-user-circle"></i> Perfil Nutricional</h2>
+                        <h2 ><i class="fas fa-user-circle"></i> Perfil Nutricional</h2>
                         <ul>
+                            <a href="{% url 'patient_profile' %}" class="edit-icon">
+                                <i class="fas fa-pencil-alt" title="Editar perfil"></i>
+                            </a>
                             <li><strong>Altura:</strong> {{ user.patientprofile.height }} cm</li>
                             <li><strong>Peso:</strong> {{ user.patientprofile.peso }} kg</li>
                             <li><strong>Objetivos Nutricionales:</strong> {{ user.patientprofile.nutrition_goals }}</li>
