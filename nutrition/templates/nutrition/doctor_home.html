@@ -76,7 +76,7 @@
                             <li>
                                 <strong>{{ cita.paciente.user.username }}</strong> - {{ cita.fecha }} a las {{ cita.hora }}
                                 <div class="buttons-container">
-                                    <a href="{% url 'confirmar_cita' cita.id %}" class="button">Confirmar Cita</a>
+                                    <a href="{% url 'confirmar_cita' cita.id %}" class="button">Ver detalles</a>
                                 </div>
                             </li>
                         {% endfor %}

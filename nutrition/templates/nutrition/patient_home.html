@@ -53,16 +53,13 @@
     <div id="sideMenu" class="side-menu">
         <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
         <a href="{% url 'patient_profile' %}">Editar Mi Perfil</a>
+        <a href="{% url 'ver_citas_paciente' %}">Ver Citas</a>
+
         
     </div>
 
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
     <div class="container">
         <h1>Bienvenido, {{ user.username }}</h1>
         <h2>Aquí puedes ver tu perfil nutricional y gestionar tus citas con tu doctor.</h2>
